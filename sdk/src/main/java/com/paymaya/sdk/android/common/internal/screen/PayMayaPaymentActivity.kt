@@ -72,6 +72,16 @@ internal abstract class PayMayaPaymentActivity<R : PayMayaRequest> :
         presenter.backButtonPressed()
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                presenter.backButtonPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     private fun initializeView() {
         CookieManager.getInstance().setAcceptThirdPartyCookies(payMayaPaymentActivityWebView, true)
         if (BuildConfig.DEBUG) {
@@ -82,14 +92,12 @@ internal abstract class PayMayaPaymentActivity<R : PayMayaRequest> :
         payMayaPaymentActivityWebView.settings.allowFileAccess = true
         payMayaPaymentActivityWebView.webViewClient = WebViewClientImpl()
 
-        /* TODO: Make a option to use toolbar (either through config, etc.)
         val toolbar = findViewById<Toolbar>(com.paymaya.sdk.android.R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.apply {
           setDisplayHomeAsUpEnabled(true)
           title = ""
         }
-         */
     }
 
     override fun loadUrl(redirectUrl: String) {
@@ -173,6 +181,8 @@ internal abstract class PayMayaPaymentActivity<R : PayMayaRequest> :
         const val EXTRAS_CLIENT_PUBLIC_KEY = "EXTRAS_CLIENT_PUBLIC_KEY"
         const val EXTRAS_ENVIRONMENT = "EXTRAS_ENVIRONMENT"
         const val EXTRAS_LOG_LEVEL = "EXTRAS_LOG_LEVEL"
+        const val EXTRAS_TOOLBAR_TITLE = "EXTRAS_TOOLBAR_TITLE"
+        const val EXTRAS_TOOLBAR_SHOW = "EXTRAS_TOOLBAR_SHOW"
         const val EXTRAS_REQUEST = "EXTRAS_REQUEST"
         const val EXTRAS_BUNDLE = "EXTRAS_BUNDLE"
 
